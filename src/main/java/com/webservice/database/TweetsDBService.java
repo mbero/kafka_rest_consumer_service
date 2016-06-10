@@ -97,9 +97,9 @@ public class TweetsDBService {
 		        
 		    	  String candidate = rs.getString("candidate");
 		    	  String tweet_time = rs.getString("tweet_time");
-		    	  Boolean sentiment = rs.getBoolean("sentiment");
+		    	  String sentiment = rs.getString("sentiment");
 
-		    	  Tweet tweet = new Tweet(candidate, tweet_time, sentiment);
+		    	  Tweet tweet = new Tweet( candidate, tweet_time, sentiment);
 		    	  allTweetsFromDB.add(tweet);
 		      }
 		      //STEP 6: Clean-up environment

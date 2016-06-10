@@ -20,7 +20,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
 
 public class KafkaConsumer extends Thread {
 	final static String clientId = "SimpleConsumerDemoClient";
-	final static String TOPIC = "test";
+	final static String TOPIC = "test2";
 	ConsumerConnector consumerConnector;
 
 	public static void main(String[] argv) throws UnsupportedEncodingException {
@@ -55,26 +55,14 @@ public class KafkaConsumer extends Thread {
 		int counter = 0;
 		List<String> arrayOfMessagesToSave = new ArrayList<String>();
 		while (it.hasNext()) {
-			
-			if (counter < 10) {
-				arrayOfMessagesToSave.add(new String(it.next().message()));
-				counter += 1;
-			} 
-			else 
-			{
-				///Transform given object from String to Tweet class object
-				for(String currentTweetInJson : arrayOfMessagesToSave)
-				{
-					//Tweet tweet = tools.convertStringToTweetClassObject(currentTweetInJson);
-					Tweet tweet = new Tweet("test", "test", true);
+		
+					Tweet tweet = tools.convertStringToTweetClassObject(new String(it.next().message()));
+					//Tweet tweet = new Tweet("test", "test", true);
 					List<Tweet> listOfTweets = new ArrayList<Tweet>();
 					listOfTweets.add(tweet);
 					// save to db package of ten messages
 					tweetsDBService.saveObjectsToDB(listOfTweets);
-				}
-				counter = 0;
-				arrayOfMessagesToSave.clear();
-			}
+		
 		}
 	}
 
