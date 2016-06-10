@@ -53,8 +53,9 @@ public class KafkaConsumer extends Thread {
 		KafkaStream<byte[], byte[]> stream = consumerMap.get(TOPIC).get(0);
 		ConsumerIterator<byte[], byte[]> it = stream.iterator();
 		int counter = 0;
+		List<String> arrayOfMessagesToSave = new ArrayList<String>();
 		while (it.hasNext()) {
-			List<String> arrayOfMessagesToSave = new ArrayList<String>();
+			
 			if (counter < 10) {
 				arrayOfMessagesToSave.add(new String(it.next().message()));
 				counter += 1;
@@ -64,14 +65,15 @@ public class KafkaConsumer extends Thread {
 				///Transform given object from String to Tweet class object
 				for(String currentTweetInJson : arrayOfMessagesToSave)
 				{
-					Tweet tweet = tools.convertStringToTweetClassObject(currentTweetInJson);
+					//Tweet tweet = tools.convertStringToTweetClassObject(currentTweetInJson);
+					Tweet tweet = new Tweet("test", "test", true);
 					List<Tweet> listOfTweets = new ArrayList<Tweet>();
 					listOfTweets.add(tweet);
+					// save to db package of ten messages
 					tweetsDBService.saveObjectsToDB(listOfTweets);
 				}
-				// save to db package of ten messages
-				
 				counter = 0;
+				arrayOfMessagesToSave.clear();
 			}
 		}
 	}

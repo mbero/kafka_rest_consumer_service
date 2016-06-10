@@ -20,7 +20,7 @@ import com.webservice.model.Tweet;
 public class TweetsDBService {
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "org.postgresql.Driver";
-	static final String DB_URL = "jdbc:postgresql://localhost:5432/tweets";
+	static final String DB_URL = "jdbc:postgresql://localhost/tweets_analyzer";
 
 	// Database credentials
 	static final String USER = "postgres";
@@ -43,7 +43,8 @@ public class TweetsDBService {
 			String sql;
 			for(Tweet currentTweet : objectsToSave)
 			{
-				sql = "INSERT INTO tweets(candidate, tweet_time, sentiment) VALUES ("+currentTweet.getCandidate()+", "+currentTweet.getTime()+", "+currentTweet.getSentiment()+");";
+				sql = "INSERT INTO tweets(candidate, tweet_time, sentiment) VALUES ( '"+currentTweet.getCandidate()+"', '"+currentTweet.getTime()+"', '"+currentTweet.getSentiment().toString()+"');";
+				System.out.println(sql);
 				int updatResult = stmt.executeUpdate(sql);
 			}
 			

@@ -1,6 +1,7 @@
 package com.webservice.rest;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -29,6 +30,29 @@ public class Tools {
 		}
 
 		return tweet;
+	}
+	
+	public String convertListOfTweetsToJSON(List<Tweet> tweets)
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		Tweet tweet = null;
+		String jsonResult = "";
+		// JSON from file to Object
+		try {
+			// JSON from String to Object
+			  jsonResult = mapper.writeValueAsString(tweets);
+			  
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonResult;
 	}
 
 }
